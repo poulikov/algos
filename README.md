@@ -2,6 +2,8 @@
 
 Comprehensive collection of algorithms and data structures implemented in Go with full test coverage.
 
+![Static Badge](https://img.shields.io/badge/vibecoded-blue?style=for-the-badge&logo=%F0%9F%A4%96&label=%F0%9F%A4%96)
+
 ## Requirements
 
 - Go 1.24.0 or later
