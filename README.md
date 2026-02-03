@@ -65,6 +65,12 @@ Comprehensive collection of algorithms and data structures implemented in Go wit
 - **Cache** - Generic caching implementation
   - Location: `cache/cache.go`
 
+### Sharding & Distributed Systems
+- **Consistent Hashing** - Distributed hashing with virtual nodes for load balancing
+  - Location: `sharding/consistent.go`
+  - Supports adding/removing nodes with minimal data movement
+  - Thread-safe with concurrent access support
+
 ## Algorithms
 
 ### Sorting Algorithms
@@ -167,6 +173,33 @@ stack.Push(20)
 val := stack.Pop()
 ```
 
+### Consistent Hashing Example
+
+```go
+import "github.com/poulikov/algos/sharding"
+
+// Create a consistent hash ring with 150 virtual nodes per physical node
+ch := sharding.NewConsistentHash[string](150)
+
+// Add database nodes
+ch.AddNode("db-server-1")
+ch.AddNode("db-server-2")
+ch.AddNode("db-server-3")
+
+// Find which node should store a key
+node, _ := ch.GetNode("user:1234")
+// node will be one of the servers above
+
+// Get multiple nodes for replication (e.g., store on 3 nodes)
+replicas := ch.GetNodes("user:1234", 3)
+
+// Add new node - minimal data remapping
+ch.AddNode("db-server-4")
+
+// Remove failed node
+ch.RemoveNode("db-server-2")
+```
+
 For more examples, check the `examples/` directory.
 
 ## Running Tests
@@ -203,6 +236,7 @@ algos/
 ├── queues/         # Queue implementations
 ├── searching/      # Searching algorithms
 ├── set/            # Hash-based sets and maps
+├── sharding/       # Consistent hashing and sharding algorithms
 ├── slidingwindow/  # Sliding window techniques
 ├── sorting/        # Sorting algorithms
 ├── stacks/         # Stack implementation
